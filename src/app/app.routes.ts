@@ -14,6 +14,10 @@ export const routes: Routes = [
     path: 'clientes',
     loadComponent: () => import('./pages/clientes/clientes.page').then(m => m.ClientesPage)
   },
+   {
+    path: 'editar-cliente/:id',
+    loadComponent: () => import('./pages/editar-cliente/editar-cliente.page').then(m => m.EditarClientePage)
+  },
   {
     path: 'agregar-cliente',
     loadComponent: () => import('./pages/agregar-cliente/agregar-cliente.page').then(m => m.AgregarClientePage)
@@ -45,6 +49,10 @@ export const routes: Routes = [
   {
     path: 'configuracion',
     loadComponent: () => import('./pages/configuracion/configuracion.page').then( m => m.ConfiguracionPage)
+  },
+  {
+    path: 'editar-cliente',
+    loadComponent: () => import('./pages/editar-cliente/editar-cliente.page').then( m => m.EditarClientePage)
   },
 
 

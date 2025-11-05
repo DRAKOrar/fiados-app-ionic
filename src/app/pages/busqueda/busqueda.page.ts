@@ -13,8 +13,7 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   search, calendar, funnel, person, cart,
-  downloadOutline, shareSocial, filterOutline
-} from 'ionicons/icons';
+  downloadOutline, shareSocial, filterOutline, codeOutline, documentTextOutline, gridOutline, logoWhatsapp } from 'ionicons/icons';
 import { DeudasService } from 'src/app/services/deudas';
 import { ExportarService } from 'src/app/services/exportar';
 import { Deuda } from '../../models/deuda.model';
@@ -63,10 +62,7 @@ export class BusquedaPage implements OnInit {
     private deudasService: DeudasService,
     private exportarService: ExportarService
   ) {
-    addIcons({
-      search, calendar, funnel, person, cart,
-      downloadOutline, shareSocial, filterOutline
-    });
+    addIcons({filterOutline,codeOutline,documentTextOutline,gridOutline,logoWhatsapp,cart,search,person,calendar,funnel,downloadOutline,shareSocial});
   }
 
   async ngOnInit() {
@@ -179,13 +175,16 @@ export class BusquedaPage implements OnInit {
   }
 
   async exportarJSON() {
-    await this.exportarService.descargarJSON();
-  }
+  await this.exportarService.descargarJSON();
+}
 
-  async exportarCSV() {
-    const pendientes = this.filtroEstado === 'pendiente';
-    await this.exportarService.descargarDeudasCSV(pendientes);
-  }
+async exportarPDFCompleto() {
+  await this.exportarService.generarPDFCompleto();
+}
+
+async exportarExcelCompleto() {
+  await this.exportarService.generarExcelCompleto();
+}
 
   async compartirWhatsApp() {
     await this.exportarService.compartirResumenWhatsApp();

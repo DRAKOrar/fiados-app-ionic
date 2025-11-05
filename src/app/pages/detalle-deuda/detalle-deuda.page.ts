@@ -23,13 +23,17 @@ import { ExportarService } from 'src/app/services/exportar';
   templateUrl: './detalle-deuda.page.html',
   styleUrls: ['./detalle-deuda.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CommonModule,
+  imports: [
+    CommonModule,
     FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar,
-    IonButton, IonCard, IonCardHeader, IonCardTitle,
-    IonCardContent, IonList, IonItem, IonLabel,
-    IonBackButton, IonButtons, IonIcon, IonBadge,
-    IonInput, IonNote]
+    IonButton, IonInput, IonItem, IonLabel,
+    IonBackButton, IonButtons,
+    IonCard, IonCardHeader, IonCardTitle,
+    IonCardContent, IonIcon,
+    IonBadge,
+    IonList
+]
 })
 export class DetalleDeudaPage implements OnInit {
 

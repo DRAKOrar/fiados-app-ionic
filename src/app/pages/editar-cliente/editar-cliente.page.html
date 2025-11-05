@@ -1,0 +1,167 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: #132440; --color: white;">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/detalle-cliente/' + clienteId" style="--color: white;"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Cliente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="guardarCambios()" style="--color: white;">
+        <ion-icon name="save-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container" *ngIf="cliente">
+
+    <!-- Información básica -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="person-outline"></ion-icon>
+          Información Básica
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Nombre Completo *</ion-label>
+          <ion-input
+            [(ngModel)]="nombre"
+            type="text"
+            placeholder="Ej: Juan Pérez García"
+            required>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Cédula / Documento</ion-label>
+          <ion-input
+            [(ngModel)]="cedula"
+            type="text"
+            placeholder="Ej: 1234567890">
+          </ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Información de contacto -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="call-outline"></ion-icon>
+          Información de Contacto
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Teléfono</ion-label>
+          <ion-input
+            [(ngModel)]="telefono"
+            type="tel"
+            placeholder="Ej: 3001234567">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Email</ion-label>
+          <ion-input
+            [(ngModel)]="email"
+            type="email"
+            placeholder="Ej: cliente@email.com">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Dirección</ion-label>
+          <ion-textarea
+            [(ngModel)]="direccion"
+            rows="2"
+            placeholder="Ej: Calle 123 #45-67, Barrio Centro">
+          </ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Notas adicionales -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="document-text-outline"></ion-icon>
+          Notas Adicionales
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Notas</ion-label>
+          <ion-textarea
+            [(ngModel)]="notas"
+            rows="3"
+            placeholder="Información adicional del cliente...">
+          </ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Información del cliente -->
+    <ion-card class="info-card">
+      <ion-card-content>
+        <div class="info-row">
+          <span class="info-label">Cliente desde:</span>
+          <span class="info-value">{{ cliente.fechaRegistro | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Saldo total:</span>
+          <span class="info-value" [class.deuda]="cliente.saldoTotal > 0">
+            {{ cliente.saldoTotal | currency:'COP':'symbol-narrow':'1.0-0' }}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+      <ion-button
+        expand="block"
+        (click)="guardarCambios()"
+        color="primary"
+        size="large">
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Guardar Cambios
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        (click)="cancelar()"
+        fill="outline"
+        color="medium">
+        Cancelar
+      </ion-button>
+    </div>
+
+    <!-- Zona de peligro -->
+    <ion-card class="danger-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="trash-outline"></ion-icon>
+          Zona de Peligro
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="danger-text">
+          Eliminar este cliente removerá toda su información.
+          Solo se puede eliminar si no tiene deudas pendientes.
+        </p>
+        <ion-button
+          expand="block"
+          color="danger"
+          fill="outline"
+          (click)="confirmarEliminar()">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Eliminar Cliente
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

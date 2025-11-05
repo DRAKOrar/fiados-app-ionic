@@ -1,9 +1,14 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #132440; --color: white;">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/clientes"></ion-back-button>
+      <ion-back-button defaultHref="/clientes" style="--color: white;"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ cliente?.nombre }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editarCliente()" style="--color: white;">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -11,77 +16,142 @@
   <div class="container" *ngIf="cliente">
 
     <!-- Información del cliente -->
-    <ion-card class="cliente-info">
-      <ion-card-header>
-        <ion-card-title>Información del Cliente</ion-card-title>
-      </ion-card-header>
+    <ion-card class="cliente-card">
       <ion-card-content>
-        <div class="info-row">
-          <strong>Teléfono:</strong>
-          <span>{{ cliente.telefono || 'No registrado' }}</span>
+        <div class="cliente-header">
+          <div class="cliente-avatar">
+            {{ cliente.nombre.charAt(0).toUpperCase() }}
+          </div>
+          <div class="cliente-info">
+            <h2 class="cliente-nombre">{{ cliente.nombre }}</h2>
+            <p class="cliente-desde">Cliente desde {{ formatearFecha(cliente.fechaRegistro) }}</p>
+          </div>
         </div>
-        <div class="info-row">
-          <strong>Dirección:</strong>
-          <span>{{ cliente.direccion || 'No registrada' }}</span>
+
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-icon phone">
+              <ion-icon name="call-outline"></ion-icon>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Teléfono</span>
+              <span class="info-value">{{ cliente.telefono || 'No registrado' }}</span>
+            </div>
+          </div>
+
+          <div class="info-item" *ngIf="cliente.email">
+            <div class="info-icon email">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Email</span>
+              <span class="info-value">{{ cliente.email }}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon location">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Dirección</span>
+              <span class="info-value">{{ cliente.direccion || 'No registrada' }}</span>
+            </div>
+          </div>
         </div>
-        <div class="info-row">
-          <strong>Cliente desde:</strong>
-          <span>{{ formatearFecha(cliente.fechaRegistro) }}</span>
+
+
+        <div class="cliente-notas" *ngIf="cliente.notas">
+          <ion-icon name="document-text-outline"></ion-icon>
+          <p>{{ cliente.notas }}</p>
         </div>
-        <div class="info-row saldo-total">
-          <strong>Saldo Total:</strong>
-          <span class="saldo" [class.deuda]="cliente.saldoTotal > 0">
-            {{ formatearMoneda(cliente.saldoTotal) }}
-          </span>
+
+        <div class="saldo-total">
+          <div class="saldo-info">
+            <span class="saldo-label">Saldo Total</span>
+            <span class="saldo-amount" [class.deuda]="cliente.saldoTotal > 0"
+              [class.saldo-cero]="cliente.saldoTotal === 0">
+              {{ formatearMoneda(cliente.saldoTotal) }}
+            </span>
+          </div>
         </div>
       </ion-card-content>
     </ion-card>
 
-    <!-- Estadísticas -->
-    <div class="estadisticas">
-      <ion-chip color="warning">
-        <ion-icon name="time-outline"></ion-icon>
-        <ion-label>{{ deudasPendientes.length }} Pendientes</ion-label>
-      </ion-chip>
-      <ion-chip color="success">
-        <ion-icon name="checkmark-circle"></ion-icon>
-        <ion-label>{{ deudasPagadas.length }} Pagadas</ion-label>
-      </ion-chip>
+    <!-- Estadísticas rápidas -->
+    <div class="stats-grid">
+      <div class="stat-card pending">
+        <div class="stat-icon">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-number">{{ deudasPendientes.length }}</span>
+          <span class="stat-label">Pendientes</span>
+        </div>
+      </div>
+
+      <div class="stat-card paid">
+        <div class="stat-icon">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-number">{{ deudasPagadas.length }}</span>
+          <span class="stat-label">Pagadas</span>
+        </div>
+      </div>
+
+      <div class="stat-card total">
+        <div class="stat-icon">
+          <ion-icon name="cart-outline"></ion-icon>
+        </div>
+        <div class="stat-content">
+          <span class="stat-number">{{ deudas.length }}</span>
+          <span class="stat-label">Total</span>
+        </div>
+      </div>
     </div>
 
     <!-- Deudas Pendientes -->
-    <div *ngIf="deudasPendientes.length > 0">
-      <h2 class="section-title">Deudas Pendientes</h2>
-      <ion-card *ngFor="let deuda of deudasPendientes" class="deuda-card" (click)="verDetalleDeuda(deuda)">
+    <div *ngIf="deudasPendientes.length > 0" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Deudas Pendientes</h2>
+        <span class="section-badge">{{ deudasPendientes.length }}</span>
+      </div>
+
+      <ion-card *ngFor="let deuda of deudasPendientes" class="deuda-card pending" (click)="verDetalleDeuda(deuda)">
         <ion-card-content>
           <div class="deuda-header">
-            <div class="fecha">
-              <ion-icon name="calendar"></ion-icon>
-              {{ formatearFecha(deuda.fecha) }}
+            <div class="deuda-fecha">
+              <div class="fecha-icon">
+                <ion-icon name="calendar-outline"></ion-icon>
+              </div>
+              <span>{{ formatearFecha(deuda.fecha) }}</span>
             </div>
-            <ion-badge color="warning">Pendiente</ion-badge>
+            <ion-badge class="status-badge pending">Pendiente</ion-badge>
           </div>
 
-          <div class="deuda-productos">
-            <ion-icon name="cart"></ion-icon>
-            <span>{{ deuda.productos.length }} producto(s)</span>
-          </div>
+          <div class="deuda-content">
+            <div class="deuda-productos">
+              <div class="productos-icon">
+                <ion-icon name="cart-outline"></ion-icon>
+              </div>
+              <span>{{ deuda.productos.length }} producto(s)</span>
+            </div>
 
-          <div class="deuda-footer">
-            <div class="montos">
+            <div class="deuda-montos">
               <div class="monto-item">
-                <span class="label">Total:</span>
-                <span class="valor">{{ formatearMoneda(deuda.total) }}</span>
+                <span class="monto-label">Total:</span>
+                <span class="monto-value">{{ formatearMoneda(deuda.total) }}</span>
               </div>
               <div class="monto-item pendiente">
-                <span class="label">Pendiente:</span>
-                <span class="valor">{{ formatearMoneda(deuda.saldoPendiente) }}</span>
+                <span class="monto-label">Pendiente:</span>
+                <span class="monto-value">{{ formatearMoneda(deuda.saldoPendiente) }}</span>
               </div>
             </div>
           </div>
 
-          <p *ngIf="deuda.notas" class="notas">
-            <ion-icon name="document-text"></ion-icon>
+          <p *ngIf="deuda.notas" class="deuda-notas">
+            <ion-icon name="document-text-outline"></ion-icon>
             {{ deuda.notas }}
           </p>
         </ion-card-content>
@@ -89,28 +159,36 @@
     </div>
 
     <!-- Deudas Pagadas -->
-    <div *ngIf="deudasPagadas.length > 0">
-      <h2 class="section-title">Historial (Pagadas)</h2>
-      <ion-card *ngFor="let deuda of deudasPagadas" class="deuda-card pagada" (click)="verDetalleDeuda(deuda)">
+    <div *ngIf="deudasPagadas.length > 0" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Historial de Pagos</h2>
+        <span class="section-badge">{{ deudasPagadas.length }}</span>
+      </div>
+
+      <ion-card *ngFor="let deuda of deudasPagadas" class="deuda-card paid" (click)="verDetalleDeuda(deuda)">
         <ion-card-content>
           <div class="deuda-header">
-            <div class="fecha">
-              <ion-icon name="calendar"></ion-icon>
-              {{ formatearFecha(deuda.fecha) }}
+            <div class="deuda-fecha">
+              <div class="fecha-icon">
+                <ion-icon name="calendar-outline"></ion-icon>
+              </div>
+              <span>{{ formatearFecha(deuda.fecha) }}</span>
             </div>
-            <ion-badge color="success">Pagada</ion-badge>
+            <ion-badge class="status-badge paid">Pagada</ion-badge>
           </div>
 
-          <div class="deuda-productos">
-            <ion-icon name="cart"></ion-icon>
-            <span>{{ deuda.productos.length }} producto(s)</span>
-          </div>
+          <div class="deuda-content">
+            <div class="deuda-productos">
+              <div class="productos-icon">
+                <ion-icon name="cart-outline"></ion-icon>
+              </div>
+              <span>{{ deuda.productos.length }} producto(s)</span>
+            </div>
 
-          <div class="deuda-footer">
-            <div class="montos">
+            <div class="deuda-montos">
               <div class="monto-item">
-                <span class="label">Total:</span>
-                <span class="valor">{{ formatearMoneda(deuda.total) }}</span>
+                <span class="monto-label">Total Pagado:</span>
+                <span class="monto-value">{{ formatearMoneda(deuda.total) }}</span>
               </div>
             </div>
           </div>
@@ -120,16 +198,22 @@
 
     <!-- Mensaje si no hay deudas -->
     <div *ngIf="deudas.length === 0" class="empty-state">
-      <ion-icon name="cart" size="large" color="medium"></ion-icon>
+      <div class="empty-icon">
+        <ion-icon name="cart-outline"></ion-icon>
+      </div>
       <h2>No hay deudas registradas</h2>
       <p>Agrega la primera deuda de este cliente</p>
+      <ion-button (click)="agregarDeuda()" expand="block" class="btn-primary">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Agregar Primera Deuda
+      </ion-button>
     </div>
 
   </div>
 
   <!-- Botón flotante para agregar deuda -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="agregarDeuda()" color="primary">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="deudas.length > 0">
+    <ion-fab-button class="fab-primary" (click)="agregarDeuda()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

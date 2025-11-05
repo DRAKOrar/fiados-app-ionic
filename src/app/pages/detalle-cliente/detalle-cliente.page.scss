@@ -1,160 +1,397 @@
 .container {
   padding: 16px;
   padding-bottom: 80px;
+  background: #f8f9fa;
+  min-height: 100%;
 }
 
-.cliente-info {
+/* Tarjeta de información del cliente */
+.cliente-card {
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
-
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--ion-color-light);
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    strong {
-      color: var(--ion-color-medium);
-      font-size: 14px;
-    }
-
-    span {
-      font-size: 14px;
-      text-align: right;
-    }
-
-    &.saldo-total {
-      margin-top: 8px;
-      padding-top: 16px;
-      border-top: 2px solid var(--ion-color-light);
-      border-bottom: none;
-
-      .saldo {
-        font-size: 18px;
-        font-weight: 700;
-
-        &.deuda {
-          color: var(--ion-color-danger);
-        }
-      }
-    }
-  }
 }
 
-.estadisticas {
+.cliente-header {
   display: flex;
-  gap: 8px;
+  align-items: center;
   margin-bottom: 20px;
-  justify-content: center;
+}
 
-  ion-chip {
+.cliente-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16476A 0%, #3B9797 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  margin-right: 16px;
+}
+
+.cliente-nombre {
+  font-size: 20px;
+  font-weight: 600;
+  color: #132440;
+  margin: 0 0 4px 0;
+}
+
+.cliente-desde {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.info-grid {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  ion-icon {
+    font-size: 20px;
+    color: white;
+  }
+
+  &.phone {
+    background: #3B9797;
+  }
+
+  &.location {
+    background: #16476A;
+  }
+}
+
+.info-content {
+  flex: 1;
+}
+
+.info-label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.info-value {
+  display: block;
+  font-size: 14px;
+  color: #132440;
+  font-weight: 500;
+}
+
+.saldo-total {
+  border-top: 1px solid #f0f0f0;
+  padding-top: 16px;
+}
+
+.saldo-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saldo-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.saldo-amount {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+
+  &.deuda {
+    background: rgba(191, 9, 47, 0.1);
+    color: #BF092F;
+  }
+
+  &.saldo-cero {
+    background: rgba(59, 151, 151, 0.1);
+    color: #3B9797;
+  }
+}
+
+/* Estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  &.pending {
+    border-left: 4px solid #BF092F;
+  }
+
+  &.paid {
+    border-left: 4px solid #3B9797;
+  }
+
+  &.total {
+    border-left: 4px solid #16476A;
+  }
+}
+
+.stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+
+  ion-icon {
+    font-size: 20px;
+    color: white;
+  }
+
+  .pending & {
+    background: rgba(191, 9, 47, 0.1);
+
     ion-icon {
-      margin-right: 4px;
+      color: #BF092F;
     }
   }
+
+  .paid & {
+    background: rgba(59, 151, 151, 0.1);
+
+    ion-icon {
+      color: #3B9797;
+    }
+  }
+
+  .total & {
+    background: rgba(22, 71, 106, 0.1);
+
+    ion-icon {
+      color: #16476A;
+    }
+  }
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-number {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #132440;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Secciones */
+.section {
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
 .section-title {
   font-size: 18px;
   font-weight: 600;
-  margin: 24px 0 12px 0;
-  color: var(--ion-color-dark);
+  color: #132440;
+  margin: 0;
 }
 
+.section-badge {
+  background: #16476A;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Tarjetas de deuda */
 .deuda-card {
+  border-radius: 16px;
   margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
   cursor: pointer;
 
-  &.pagada {
-    opacity: 0.7;
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
   }
 
-  ion-card-content {
-    padding: 16px;
+  &.pending {
+    border-left: 4px solid #BF092F;
   }
 
-  .deuda-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-
-    .fecha {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--ion-color-medium);
-      font-size: 14px;
-
-      ion-icon {
-        font-size: 16px;
-      }
-    }
+  &.paid {
+    border-left: 4px solid #3B9797;
   }
+}
 
-  .deuda-productos {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 12px;
-    color: var(--ion-color-dark);
+.deuda-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.deuda-fecha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.fecha-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(59, 151, 151, 0.1);
+
+  ion-icon {
     font-size: 14px;
+    color: #3B9797;
+  }
+}
 
-    ion-icon {
-      font-size: 18px;
-      color: var(--ion-color-primary);
-    }
+.status-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+
+  &.pending {
+    background: rgba(191, 9, 47, 0.1);
+    color: #BF092F;
   }
 
-  .deuda-footer {
-    .montos {
-      .monto-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-
-        .label {
-          color: var(--ion-color-medium);
-          font-size: 14px;
-        }
-
-        .valor {
-          font-weight: 600;
-          font-size: 14px;
-        }
-
-        &.pendiente {
-          .valor {
-            color: var(--ion-color-danger);
-            font-size: 16px;
-          }
-        }
-      }
-    }
+  &.paid {
+    background: rgba(59, 151, 151, 0.1);
+    color: #3B9797;
   }
+}
 
-  .notas {
-    display: flex;
-    align-items: flex-start;
-    gap: 6px;
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--ion-color-light);
-    font-size: 13px;
-    color: var(--ion-color-medium);
-    font-style: italic;
+.deuda-content {
+  margin-bottom: 12px;
+}
 
-    ion-icon {
-      font-size: 16px;
-      margin-top: 2px;
+.deuda-productos {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.productos-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(22, 71, 106, 0.1);
+
+  ion-icon {
+    font-size: 14px;
+    color: #16476A;
+  }
+}
+
+.deuda-montos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.monto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.pendiente {
+    .monto-value {
+      color: #BF092F;
+      font-weight: 700;
     }
   }
 }
 
+.monto-label {
+  font-size: 13px;
+  color: #666;
+}
+
+.monto-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #132440;
+}
+
+.deuda-notas {
+  font-size: 13px;
+  color: #666;
+  margin: 12px 0 0 0;
+  padding: 8px;
+  background: rgba(59, 151, 151, 0.05);
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+
+  ion-icon {
+    font-size: 14px;
+    color: #3B9797;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+/* Estado vacío */
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -162,21 +399,73 @@
   justify-content: center;
   padding: 60px 20px;
   text-align: center;
+}
+
+.empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(59, 151, 151, 0.1);
+  margin-bottom: 20px;
 
   ion-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
+    font-size: 40px;
+    color: #3B9797;
+  }
+}
+
+.empty-state h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #132440;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+.btn-primary {
+  --background: #16476A;
+  --background-activated: #132440;
+  --background-hover: #3B9797;
+  --color: white;
+  --border-radius: 12px;
+  font-weight: 600;
+  height: 48px;
+  max-width: 280px;
+}
+
+.fab-primary {
+  --background: #BF092F;
+  --background-activated: #132440;
+  --background-hover: #16476A;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 12px;
+    padding-bottom: 80px;
   }
 
-  h2 {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .cliente-avatar {
+    width: 50px;
+    height: 50px;
     font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--ion-color-dark);
   }
 
-  p {
-    color: var(--ion-color-medium);
-    font-size: 14px;
+  .cliente-nombre {
+    font-size: 18px;
   }
 }

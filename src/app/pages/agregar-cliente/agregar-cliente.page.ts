@@ -21,9 +21,12 @@ import { DeudasService } from 'src/app/services/deudas';
 })
 export class AgregarClientePage{
 
-  nombre: string = '';
+ nombre: string = '';
+  cedula: string = '';
   telefono: string = '';
+  email: string = '';
   direccion: string = '';
+  notas: string = '';
 
   constructor(
     private deudasService: DeudasService,
@@ -36,11 +39,20 @@ export class AgregarClientePage{
       return;
     }
 
+    // Validar email si se proporciona
+    if (this.email && !this.validarEmail(this.email)) {
+      alert('El email no es válido');
+      return;
+    }
+
     try {
       await this.deudasService.crearCliente(
         this.nombre.trim(),
+        this.cedula.trim() || undefined,
         this.telefono.trim() || undefined,
-        this.direccion.trim() || undefined
+        this.email.trim() || undefined,
+        this.direccion.trim() || undefined,
+        this.notas.trim() || undefined
       );
 
       this.router.navigate(['/clientes']);
@@ -48,6 +60,11 @@ export class AgregarClientePage{
       console.error('Error al guardar cliente:', error);
       alert('Error al guardar el cliente');
     }
+  }
+
+  private validarEmail(email: string): boolean {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   }
 
   cancelar() {

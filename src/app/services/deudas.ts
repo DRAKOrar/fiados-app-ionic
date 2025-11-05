@@ -13,18 +13,65 @@ export class DeudasService {
   constructor(private storage: StorageService) {}
 
   // ========== CLIENTES ==========
-  async crearCliente(nombre: string, telefono?: string, direccion?: string): Promise<Cliente> {
-    const cliente: Cliente = {
-      id: this.generarId(),
-      nombre,
-      telefono,
-      direccion,
-      fechaRegistro: new Date().toISOString(),
-      saldoTotal: 0
-    };
-    await this.storage.agregarCliente(cliente);
-    return cliente;
+  async crearCliente(
+  nombre: string,
+  cedula?: string,
+  telefono?: string,
+  email?: string,
+  direccion?: string,
+  notas?: string
+): Promise<Cliente> {
+  const cliente: Cliente = {
+    id: this.generarId(),
+    nombre,
+    cedula,
+    telefono,
+    email,
+    direccion,
+    fechaRegistro: new Date().toISOString(),
+    saldoTotal: 0,
+    notas
+  };
+  await this.storage.agregarCliente(cliente);
+  return cliente;
+}
+
+  // Agregar después del método crearCliente
+async actualizarCliente(
+  id: string,
+  nombre: string,
+  cedula?: string,
+  telefono?: string,
+  email?: string,
+  direccion?: string,
+  notas?: string
+): Promise<void> {
+  const cliente = await this.storage.getClientePorId(id);
+  if (!cliente) {
+    throw new Error('Cliente no encontrado');
   }
+
+  cliente.nombre = nombre;
+  cliente.cedula = cedula;
+  cliente.telefono = telefono;
+  cliente.email = email;
+  cliente.direccion = direccion;
+  cliente.notas = notas;
+
+  await this.storage.actualizarCliente(cliente);
+}
+
+async eliminarCliente(id: string): Promise<void> {
+  // Verificar si tiene deudas pendientes
+  const deudas = await this.storage.getDeudasPorCliente(id);
+  const tieneDeudasPendientes = deudas.some(d => d.estado === 'pendiente');
+
+  if (tieneDeudasPendientes) {
+    throw new Error('No se puede eliminar un cliente con deudas pendientes');
+  }
+
+  await this.storage.eliminarCliente(id);
+}
 
   async obtenerClientes(): Promise<Cliente[]> {
     return await this.storage.getClientes();
