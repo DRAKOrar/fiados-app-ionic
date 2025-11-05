@@ -1,18 +1,43 @@
+/* Definición de la paleta de colores */
+:root {
+  --app-color-primary: #BF092F;
+  --app-color-dark-bg: #132440;
+  --app-color-secondary: #16476A;
+  --app-color-accent: #3B9797;
+}
+
+/* Aplicar el color de fondo principal para toda la aplicación */
+ion-content {
+  --background: var(--app-color-dark-bg);
+}
+
 .container {
   padding: 16px;
   padding-bottom: 80px;
 }
 
-ion-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  ion-icon {
-    font-size: 24px;
+/* Estilos para el encabezado y título */
+ion-header {
+  ion-toolbar {
+    --background: var(--app-color-dark-bg); /* Opcional: Oscurecer el header */
+    color: white; /* Color del texto del header */
   }
 }
 
+ion-title {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+
+  ion-icon {
+    font-size: 24px;
+    color: var(--app-color-accent);
+  }
+}
+
+/* --- Tarjetas de Estadísticas (Stats-Grid) --- */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -22,6 +47,8 @@ ion-title {
 
 .stat-card {
   margin: 0;
+  border-radius: 10px; /* Bordes más suaves */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
 
   ion-card-content {
     display: flex;
@@ -34,13 +61,13 @@ ion-title {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%; /* Icono circular */
+    background: rgba(255, 255, 255, 0.2); /* Fondo sutil para el icono */
 
     ion-icon {
-      font-size: 28px;
+      font-size: 24px; /* Icono un poco más pequeño */
       color: white;
     }
   }
@@ -49,66 +76,80 @@ ion-title {
     flex: 1;
 
     h2 {
-      font-size: 18px;
+      font-size: 20px; /* Hacer los números más grandes */
       font-weight: 700;
-      margin: 0 0 4px 0;
+      margin: 0 0 2px 0; /* Espacio ajustado */
       color: white;
     }
 
     p {
-      font-size: 12px;
+      font-size: 11px; /* Etiqueta más pequeña */
       margin: 0;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase; /* Darle un toque moderno a la etiqueta */
     }
   }
 
+  /* Aplicación de la paleta a las tarjetas */
   &.primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--app-color-primary); /* #BF092F */
   }
-
   &.success {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background: var(--app-color-accent); /* #3B9797 */
   }
-
   &.info {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: var(--app-color-secondary); /* #16476A */
   }
-
   &.clients {
-    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    /* Usar un color secundario o mezclar, aquí una variación de azul oscuro */
+    background: linear-gradient(135deg, var(--app-color-dark-bg) 0%, var(--app-color-secondary) 100%);
   }
+}
+
+/* --- Resumen de Deudas --- */
+/* Cambiar el fondo de la tarjeta de resumen para que contraste con el fondo oscuro */
+ion-card {
+  --background: white;
+  color: var(--ion-color-dark);
+  border-radius: 10px;
+  margin: 0 0 16px 0; /* Ajustar margen inferior */
 }
 
 .deudas-resumen {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+  padding: 8px 0; /* Espacio interno para el contenido del resumen */
 
   .resumen-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 8px; /* Pequeño padding interno */
+    border-radius: 8px;
 
     ion-icon {
-      font-size: 36px;
-      margin-bottom: 8px;
+      font-size: 32px; /* Icono un poco más pequeño */
+      margin-bottom: 4px; /* Espacio ajustado */
     }
 
     h3 {
-      font-size: 24px;
+      font-size: 20px; /* Números un poco más pequeños para este resumen */
       font-weight: 700;
-      margin: 0 0 4px 0;
+      margin: 0;
       color: var(--ion-color-dark);
     }
 
     p {
-      font-size: 12px;
+      font-size: 11px; /* Etiqueta más pequeña */
       margin: 0;
       color: var(--ion-color-medium);
     }
   }
 }
+
+/* --- Listas de Clientes y Deudas --- */
 
 .card-header-with-action {
   display: flex;
@@ -116,14 +157,27 @@ ion-title {
   align-items: center;
 
   ion-card-title {
-    font-size: 16px;
+    font-size: 18px; /* Títulos de tarjeta más claros */
+    font-weight: 600;
+    color: var(--ion-color-dark);
   }
+}
+
+ion-list {
+  background: white; /* Asegurar fondo blanco en la lista */
+  padding: 0; /* Eliminar padding por defecto */
+}
+
+ion-item {
+  --padding-start: 0; /* Ajustar padding de inicio del ítem */
+  --inner-padding-end: 0; /* Ajustar padding final del inner item */
+  --border-color: #eee; /* Borde más sutil entre ítems */
 }
 
 .cliente-saldo {
   font-weight: 700;
   font-size: 16px;
-  color: var(--ion-color-danger);
+  color: var(--app-color-primary); /* Usar el rojo oscuro para la deuda */
 }
 
 .deuda-info {
@@ -137,51 +191,35 @@ ion-title {
     font-size: 14px;
     color: var(--ion-color-dark);
   }
+
+  ion-badge {
+    /* Ajustar los colores de los badges */
+    &[color="success"] {
+      --background: var(--app-color-accent); /* Turquesa */
+    }
+    &[color="warning"] {
+      --background: var(--app-color-secondary); /* Azul medio */
+      color: white;
+    }
+  }
 }
 
-ion-list {
-  background: transparent;
-}
-
+/* --- Estado Vacío --- */
 .empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  text-align: center;
-
+  /* Mantener estilos existentes pero ajustar colores a la paleta si es necesario */
   ion-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-  }
-
-  h2 {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--ion-color-dark);
-  }
-
-  p {
-    color: var(--ion-color-medium);
-    font-size: 14px;
-    margin-bottom: 24px;
-  }
-
-  ion-button {
-    max-width: 300px;
+    color: var(--app-color-secondary); /* Icono con color de la paleta */
   }
 }
 
+/* --- Botón Flotante --- */
+ion-fab-button {
+  --background: var(--app-color-primary); /* Usar el color principal para el FAB */
+}
+
+/* Media Query: Mantener la adaptación a móviles */
 @media (max-width: 576px) {
   .stats-grid {
     grid-template-columns: 1fr;
-  }
-
-  .stat-card {
-    .stat-info h2 {
-      font-size: 20px;
-    }
   }
 }

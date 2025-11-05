@@ -6,13 +6,13 @@ import {
   IonCard, IonCardHeader, IonCardTitle, IonCardContent,
   IonButton, IonIcon, IonList, IonItem, IonLabel,
   IonBadge, IonGrid, IonRow, IonCol, IonRefresher,
-  IonRefresherContent, IonFab, IonFabButton, IonButtons } from '@ionic/angular/standalone';
+  IonRefresherContent, IonFab, IonFabButton, IonButtons, IonAvatar } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   people, cash, trendingUp, checkmarkCircle,
-  timeOutline, wallet, cart, refreshOutline,
-  add, statsChart, personAdd, person, home } from 'ionicons/icons';
+  timeOutline, wallet, cart, refreshOutline,time,
+  add, statsChart, personAdd, person, home, list, receipt } from 'ionicons/icons';
 import { DeudasService } from 'src/app/services/deudas';
 import { Cliente } from '../../models/cliente.model';
 import { Deuda } from '../../models/deuda.model';
@@ -22,7 +22,7 @@ import { search } from 'ionicons/icons'; // Agregar
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CommonModule,
+  imports: [IonAvatar, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CommonModule,
     FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar,
     IonCard, IonCardHeader, IonCardTitle, IonCardContent,
@@ -48,7 +48,7 @@ export class DashboardPage implements OnInit {
     private deudasService: DeudasService,
     private router: Router
   ) {
-    addIcons({home,statsChart,cash,wallet,trendingUp,people,timeOutline,checkmarkCircle,cart,person,personAdd,add,refreshOutline,search});
+    addIcons({statsChart,search,cash,wallet,trendingUp,people,timeOutline,checkmarkCircle,cart,person,receipt,personAdd,add,list,time,home,refreshOutline});
   }
 
   async ngOnInit() {
@@ -91,6 +91,8 @@ export class DashboardPage implements OnInit {
       minimumFractionDigits: 0
     }).format(valor);
   }
+
+  irABusqueda() { this.router.navigate(['/busqueda']); }
 
   formatearFecha(fecha: string): string {
     const date = new Date(fecha);
