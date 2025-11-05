@@ -1,0 +1,54 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/clientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <form>
+      <ion-item>
+        <ion-label position="stacked">Nombre *</ion-label>
+        <ion-input
+          [(ngModel)]="nombre"
+          name="nombre"
+          type="text"
+          placeholder="Ej: Juan Pérez"
+          required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Teléfono</ion-label>
+        <ion-input
+          [(ngModel)]="telefono"
+          name="telefono"
+          type="tel"
+          placeholder="Ej: 3001234567">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Dirección</ion-label>
+        <ion-textarea
+          [(ngModel)]="direccion"
+          name="direccion"
+          rows="2"
+          placeholder="Ej: Calle 123 #45-67">
+        </ion-textarea>
+      </ion-item>
+
+      <div class="buttons">
+        <ion-button expand="block" (click)="guardarCliente()" color="primary">
+          Guardar Cliente
+        </ion-button>
+        <ion-button expand="block" (click)="cancelar()" fill="outline" color="medium">
+          Cancelar
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>

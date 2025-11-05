@@ -1,0 +1,218 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Búsqueda y Filtros</ion-title>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-searchbar
+      [(ngModel)]="textoBusqueda"
+      (ionInput)="buscar($event)"
+      placeholder="Buscar..."
+      animated="true">
+    </ion-searchbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="vistaActual" (ionChange)="cambiarVista($event)">
+      <ion-segment-button value="deudas">
+        <ion-label>Deudas</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="clientes">
+        <ion-label>Clientes</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+      <ion-button
+        size="small"
+        fill="outline"
+        (click)="mostrarFiltros = true"
+        *ngIf="vistaActual === 'deudas'">
+        <ion-icon name="filter-outline" slot="start"></ion-icon>
+        Filtros
+        <ion-badge *ngIf="hayFiltrosActivos()" color="danger">•</ion-badge>
+      </ion-button>
+
+      <ion-button size="small" fill="outline" (click)="exportarJSON()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        JSON
+      </ion-button>
+
+      <ion-button size="small" fill="outline" (click)="exportarCSV()">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        CSV
+      </ion-button>
+
+      <ion-button size="small" fill="outline" (click)="compartirWhatsApp()">
+        <ion-icon name="share-social" slot="start"></ion-icon>
+        WhatsApp
+      </ion-button>
+    </div>
+
+    <!-- Vista de Deudas -->
+    <div *ngIf="vistaActual === 'deudas'">
+      <p class="resultados-count">{{ deudasFiltradas.length }} resultado(s)</p>
+
+      <ion-list *ngIf="deudasFiltradas.length > 0">
+        <ion-item
+          *ngFor="let deuda of deudasFiltradas"
+          button
+          (click)="verDeuda(deuda)"
+          detail="true">
+          <ion-icon
+            name="cart"
+            slot="start"
+            [color]="deuda.estado === 'pagada' ? 'success' : 'warning'">
+          </ion-icon>
+          <ion-label>
+            <h2>{{ deuda.clienteNombre }}</h2>
+            <p>{{ formatearFecha(deuda.fecha) }} · {{ deuda.productos.length }} producto(s)</p>
+            <p class="deuda-total">Total: {{ formatearMoneda(deuda.total) }}</p>
+          </ion-label>
+          <div slot="end" class="deuda-end">
+            <ion-badge [color]="deuda.estado === 'pagada' ? 'success' : 'warning'">
+              {{ deuda.estado === 'pagada' ? 'Pagada' : 'Pendiente' }}
+            </ion-badge>
+            <span class="saldo" *ngIf="deuda.estado === 'pendiente'">
+              {{ formatearMoneda(deuda.saldoPendiente) }}
+            </span>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <div *ngIf="deudasFiltradas.length === 0" class="empty-state">
+        <ion-icon name="search" size="large" color="medium"></ion-icon>
+        <h2>No se encontraron resultados</h2>
+        <p>Intenta ajustar los filtros de búsqueda</p>
+      </div>
+    </div>
+
+    <!-- Vista de Clientes -->
+    <div *ngIf="vistaActual === 'clientes'">
+      <p class="resultados-count">{{ clientesFiltrados.length }} resultado(s)</p>
+
+      <ion-list *ngIf="clientesFiltrados.length > 0">
+        <ion-item
+          *ngFor="let cliente of clientesFiltrados"
+          button
+          (click)="verCliente(cliente)"
+          detail="true">
+          <ion-icon name="person" slot="start" color="primary"></ion-icon>
+          <ion-label>
+            <h2>{{ cliente.nombre }}</h2>
+            <p *ngIf="cliente.telefono">{{ cliente.telefono }}</p>
+            <p class="saldo" [class.deuda]="cliente.saldoTotal > 0">
+              Saldo: {{ formatearMoneda(cliente.saldoTotal) }}
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div *ngIf="clientesFiltrados.length === 0" class="empty-state">
+        <ion-icon name="search" size="large" color="medium"></ion-icon>
+        <h2>No se encontraron clientes</h2>
+        <p>Intenta con otro término de búsqueda</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal de filtros -->
+  <ion-modal [isOpen]="mostrarFiltros" (didDismiss)="mostrarFiltros = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>Filtros</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="mostrarFiltros = false">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="filtros-container">
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Estado</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-select [(ngModel)]="filtroEstado" (ionChange)="aplicarFiltros()" interface="popover">
+                <ion-select-option value="todas">Todas</ion-select-option>
+                <ion-select-option value="pendiente">Pendientes</ion-select-option>
+                <ion-select-option value="pagada">Pagadas</ion-select-option>
+              </ion-select>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Rango de Fechas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="stacked">Desde</ion-label>
+                <ion-input
+                  type="date"
+                  [(ngModel)]="filtroFechaDesde"
+                  (ionChange)="aplicarFiltros()">
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Hasta</ion-label>
+                <ion-input
+                  type="date"
+                  [(ngModel)]="filtroFechaHasta"
+                  (ionChange)="aplicarFiltros()">
+                </ion-input>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Rango de Montos</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="stacked">Monto Mínimo</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="filtroMontoMin"
+                  (ionChange)="aplicarFiltros()"
+                  placeholder="0">
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Monto Máximo</ion-label>
+                <ion-input
+                  type="number"
+                  [(ngModel)]="filtroMontoMax"
+                  (ionChange)="aplicarFiltros()"
+                  placeholder="Sin límite">
+                </ion-input>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-button
+            expand="block"
+            fill="outline"
+            color="danger"
+            (click)="limpiarFiltros()">
+            Limpiar Filtros
+          </ion-button>
+
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

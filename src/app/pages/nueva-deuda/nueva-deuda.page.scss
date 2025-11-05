@@ -1,0 +1,100 @@
+.container {
+  padding: 16px;
+  padding-bottom: 40px;
+}
+
+.cliente-card {
+  margin-bottom: 20px;
+
+  ion-card-title {
+    font-size: 20px;
+    color: var(--ion-color-primary);
+  }
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 16px;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+
+  .col {
+    flex: 1;
+  }
+}
+
+.subtotal-preview {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  margin: 16px 0;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+
+  span {
+    color: var(--ion-color-medium);
+    font-size: 14px;
+  }
+
+  strong {
+    font-size: 18px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.producto-subtotal {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ion-color-dark);
+}
+
+.total-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 2px solid var(--ion-color-light);
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .label {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ion-color-dark);
+    }
+
+    .valor {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+.action-buttons {
+  margin-top: 32px;
+
+  ion-button {
+    margin-bottom: 12px;
+  }
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}

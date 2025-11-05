@@ -1,0 +1,182 @@
+.container {
+  padding: 16px;
+  padding-bottom: 80px;
+}
+
+.cliente-info {
+  margin-bottom: 20px;
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--ion-color-light);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    strong {
+      color: var(--ion-color-medium);
+      font-size: 14px;
+    }
+
+    span {
+      font-size: 14px;
+      text-align: right;
+    }
+
+    &.saldo-total {
+      margin-top: 8px;
+      padding-top: 16px;
+      border-top: 2px solid var(--ion-color-light);
+      border-bottom: none;
+
+      .saldo {
+        font-size: 18px;
+        font-weight: 700;
+
+        &.deuda {
+          color: var(--ion-color-danger);
+        }
+      }
+    }
+  }
+}
+
+.estadisticas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+
+  ion-chip {
+    ion-icon {
+      margin-right: 4px;
+    }
+  }
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 24px 0 12px 0;
+  color: var(--ion-color-dark);
+}
+
+.deuda-card {
+  margin-bottom: 12px;
+  cursor: pointer;
+
+  &.pagada {
+    opacity: 0.7;
+  }
+
+  ion-card-content {
+    padding: 16px;
+  }
+
+  .deuda-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .fecha {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ion-color-medium);
+      font-size: 14px;
+
+      ion-icon {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .deuda-productos {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    color: var(--ion-color-dark);
+    font-size: 14px;
+
+    ion-icon {
+      font-size: 18px;
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .deuda-footer {
+    .montos {
+      .monto-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+
+        .label {
+          color: var(--ion-color-medium);
+          font-size: 14px;
+        }
+
+        .valor {
+          font-weight: 600;
+          font-size: 14px;
+        }
+
+        &.pendiente {
+          .valor {
+            color: var(--ion-color-danger);
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .notas {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ion-color-light);
+    font-size: 13px;
+    color: var(--ion-color-medium);
+    font-style: italic;
+
+    ion-icon {
+      font-size: 16px;
+      margin-top: 2px;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 14px;
+  }
+}

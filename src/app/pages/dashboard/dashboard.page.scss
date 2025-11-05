@@ -1,0 +1,187 @@
+.container {
+  padding: 16px;
+  padding-bottom: 80px;
+}
+
+ion-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  margin: 0;
+
+  ion-card-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
+
+    ion-icon {
+      font-size: 28px;
+      color: white;
+    }
+  }
+
+  .stat-info {
+    flex: 1;
+
+    h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: white;
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+
+  &.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  &.success {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  }
+
+  &.info {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  &.clients {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  }
+}
+
+.deudas-resumen {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  .resumen-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    ion-icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: var(--ion-color-dark);
+    }
+
+    p {
+      font-size: 12px;
+      margin: 0;
+      color: var(--ion-color-medium);
+    }
+  }
+}
+
+.card-header-with-action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ion-card-title {
+    font-size: 16px;
+  }
+}
+
+.cliente-saldo {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ion-color-danger);
+}
+
+.deuda-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+
+  .monto {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--ion-color-dark);
+  }
+}
+
+ion-list {
+  background: transparent;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  ion-button {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    .stat-info h2 {
+      font-size: 20px;
+    }
+  }
+}

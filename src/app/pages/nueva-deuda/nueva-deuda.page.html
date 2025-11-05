@@ -1,0 +1,141 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/detalle-cliente/' + clienteId"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nueva Deuda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container" *ngIf="cliente">
+
+    <!-- Información del cliente -->
+    <ion-card class="cliente-card">
+      <ion-card-header>
+        <ion-card-title>{{ cliente.nombre }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+
+    <!-- Formulario para agregar productos -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Agregar Producto</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Producto *</ion-label>
+          <ion-input
+            [(ngModel)]="productoNombre"
+            type="text"
+            placeholder="Ej: Arroz Diana x 500g">
+          </ion-input>
+        </ion-item>
+
+        <div class="row">
+          <ion-item class="col">
+            <ion-label position="stacked">Cantidad *</ion-label>
+            <ion-input
+              [(ngModel)]="productoCantidad"
+              type="number"
+              min="1"
+              placeholder="1">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="col">
+            <ion-label position="stacked">Valor Unitario *</ion-label>
+            <ion-input
+              [(ngModel)]="productoValorUnitario"
+              type="number"
+              min="0"
+              placeholder="0">
+            </ion-input>
+          </ion-item>
+        </div>
+
+        <div class="subtotal-preview" *ngIf="productoCantidad > 0 && productoValorUnitario > 0">
+          <span>Subtotal:</span>
+          <strong>{{ formatearMoneda(productoCantidad * productoValorUnitario) }}</strong>
+        </div>
+
+        <ion-button
+          expand="block"
+          (click)="agregarProducto()"
+          [disabled]="!productoNombre || productoCantidad <= 0 || productoValorUnitario <= 0">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Agregar Producto
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Lista de productos agregados -->
+    <ion-card *ngIf="productos.length > 0">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="cart"></ion-icon>
+          Productos ({{ productos.length }})
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item-sliding *ngFor="let producto of productos">
+            <ion-item>
+              <ion-label>
+                <h2>{{ producto.nombre }}</h2>
+                <p>
+                  {{ producto.cantidad }} x {{ formatearMoneda(producto.valorUnitario) }}
+                </p>
+              </ion-label>
+              <div slot="end" class="producto-subtotal">
+                {{ formatearMoneda(producto.subtotal) }}
+              </div>
+            </ion-item>
+
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="eliminarProducto(producto)">
+                <ion-icon name="trash"></ion-icon>
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <!-- Total -->
+        <div class="total-section">
+          <div class="total-row">
+            <span class="label">TOTAL:</span>
+            <span class="valor">{{ formatearMoneda(calcularTotal()) }}</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Notas opcionales -->
+    <ion-card *ngIf="productos.length > 0">
+      <ion-card-header>
+        <ion-card-title>Notas (Opcional)</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Observaciones</ion-label>
+          <ion-textarea
+            [(ngModel)]="notas"
+            rows="3"
+            placeholder="Ej: Pago el próximo viernes">
+          </ion-textarea>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons" *ngIf="productos.length > 0">
+      <ion-button expand="block" (click)="guardarDeuda()" color="primary" size="large">
+        Guardar Deuda
+      </ion-button>
+      <ion-button expand="block" (click)="cancelar()" fill="outline" color="medium">
+        Cancelar
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

@@ -1,0 +1,44 @@
+.container {
+  padding: 16px;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 80px;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    color: var(--ion-color-medium);
+    font-size: 14px;
+  }
+}
+
+.saldo {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 4px;
+
+  &.deuda {
+    color: var(--ion-color-danger);
+  }
+}
+
+ion-item {
+  --padding-start: 16px;
+  margin-bottom: 8px;
+}

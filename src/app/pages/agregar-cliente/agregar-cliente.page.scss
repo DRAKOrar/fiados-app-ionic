@@ -1,0 +1,17 @@
+.container {
+  padding: 20px;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 16px;
+}
+
+.buttons {
+  margin-top: 32px;
+
+  ion-button {
+    margin-bottom: 12px;
+  }
+}

@@ -1,0 +1,181 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="stats-chart"></ion-icon>
+      Mi Negocio
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="refrescar($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="container">
+
+    <!-- Estadísticas principales -->
+    <div class="stats-grid">
+      <ion-card class="stat-card primary">
+        <ion-card-content>
+          <div class="stat-icon">
+            <ion-icon name="cash"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ formatearMoneda(estadisticas.totalPorCobrar) }}</h2>
+            <p>Por Cobrar</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card success">
+        <ion-card-content>
+          <div class="stat-icon">
+            <ion-icon name="wallet"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ formatearMoneda(estadisticas.totalCobrado) }}</h2>
+            <p>Cobrado</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card info">
+        <ion-card-content>
+          <div class="stat-icon">
+            <ion-icon name="trending-up"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ formatearMoneda(estadisticas.totalVendido) }}</h2>
+            <p>Total Vendido</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="stat-card clients">
+        <ion-card-content>
+          <div class="stat-icon">
+            <ion-icon name="people"></ion-icon>
+          </div>
+          <div class="stat-info">
+            <h2>{{ estadisticas.totalClientes }}</h2>
+            <p>Clientes</p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Resumen de deudas -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resumen de Deudas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="deudas-resumen">
+          <div class="resumen-item">
+            <ion-icon name="time-outline" color="warning"></ion-icon>
+            <div>
+              <h3>{{ estadisticas.deudasPendientesCount }}</h3>
+              <p>Pendientes</p>
+            </div>
+          </div>
+          <div class="resumen-item">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <div>
+              <h3>{{ estadisticas.deudasPagadasCount }}</h3>
+              <p>Pagadas</p>
+            </div>
+          </div>
+          <div class="resumen-item">
+            <ion-icon name="cart" color="primary"></ion-icon>
+            <div>
+              <h3>{{ estadisticas.totalDeudas }}</h3>
+              <p>Total</p>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Top clientes con deuda -->
+    <ion-card *ngIf="estadisticas.clientesConDeuda.length > 0">
+      <ion-card-header>
+        <div class="card-header-with-action">
+          <ion-card-title>Clientes con Mayor Deuda</ion-card-title>
+          <ion-button fill="clear" size="small" (click)="verClientes()">
+            Ver todos
+          </ion-button>
+        </div>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item
+            *ngFor="let cliente of estadisticas.clientesConDeuda"
+            button
+            (click)="verCliente(cliente)"
+            detail="true">
+            <ion-icon name="person" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h3>{{ cliente.nombre }}</h3>
+              <p *ngIf="cliente.telefono">{{ cliente.telefono }}</p>
+            </ion-label>
+            <div slot="end" class="cliente-saldo">
+              {{ formatearMoneda(cliente.saldoTotal) }}
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Deudas recientes -->
+    <ion-card *ngIf="estadisticas.deudasRecientes.length > 0">
+      <ion-card-header>
+        <ion-card-title>Actividad Reciente</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item
+            *ngFor="let deuda of estadisticas.deudasRecientes"
+            button
+            (click)="verDeuda(deuda)"
+            detail="true">
+            <ion-icon name="cart" slot="start" [color]="deuda.estado === 'pagada' ? 'success' : 'warning'"></ion-icon>
+            <ion-label>
+              <h3>{{ deuda.clienteNombre }}</h3>
+              <p>{{ formatearFecha(deuda.fecha) }} · {{ deuda.productos.length }} producto(s)</p>
+            </ion-label>
+            <div slot="end" class="deuda-info">
+              <div class="monto">{{ formatearMoneda(deuda.total) }}</div>
+              <ion-badge [color]="deuda.estado === 'pagada' ? 'success' : 'warning'">
+                {{ deuda.estado === 'pagada' ? 'Pagada' : 'Pendiente' }}
+              </ion-badge>
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Mensaje si no hay datos -->
+    <div *ngIf="estadisticas.totalClientes === 0" class="empty-state">
+      <ion-icon name="person-add" size="large" color="medium"></ion-icon>
+      <h2>¡Bienvenido!</h2>
+      <p>Comienza agregando tu primer cliente y registrando deudas</p>
+      <ion-button (click)="agregarCliente()" expand="block">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Agregar Cliente
+      </ion-button>
+    </div>
+
+  </div>
+
+  <!-- Botón flotante -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="estadisticas.totalClientes > 0">
+    <ion-fab-button (click)="agregarCliente()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

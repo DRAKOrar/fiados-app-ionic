@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/clientes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ cliente?.nombre }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container" *ngIf="cliente">
+
+    <!-- Información del cliente -->
+    <ion-card class="cliente-info">
+      <ion-card-header>
+        <ion-card-title>Información del Cliente</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="info-row">
+          <strong>Teléfono:</strong>
+          <span>{{ cliente.telefono || 'No registrado' }}</span>
+        </div>
+        <div class="info-row">
+          <strong>Dirección:</strong>
+          <span>{{ cliente.direccion || 'No registrada' }}</span>
+        </div>
+        <div class="info-row">
+          <strong>Cliente desde:</strong>
+          <span>{{ formatearFecha(cliente.fechaRegistro) }}</span>
+        </div>
+        <div class="info-row saldo-total">
+          <strong>Saldo Total:</strong>
+          <span class="saldo" [class.deuda]="cliente.saldoTotal > 0">
+            {{ formatearMoneda(cliente.saldoTotal) }}
+          </span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Estadísticas -->
+    <div class="estadisticas">
+      <ion-chip color="warning">
+        <ion-icon name="time-outline"></ion-icon>
+        <ion-label>{{ deudasPendientes.length }} Pendientes</ion-label>
+      </ion-chip>
+      <ion-chip color="success">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <ion-label>{{ deudasPagadas.length }} Pagadas</ion-label>
+      </ion-chip>
+    </div>
+
+    <!-- Deudas Pendientes -->
+    <div *ngIf="deudasPendientes.length > 0">
+      <h2 class="section-title">Deudas Pendientes</h2>
+      <ion-card *ngFor="let deuda of deudasPendientes" class="deuda-card" (click)="verDetalleDeuda(deuda)">
+        <ion-card-content>
+          <div class="deuda-header">
+            <div class="fecha">
+              <ion-icon name="calendar"></ion-icon>
+              {{ formatearFecha(deuda.fecha) }}
+            </div>
+            <ion-badge color="warning">Pendiente</ion-badge>
+          </div>
+
+          <div class="deuda-productos">
+            <ion-icon name="cart"></ion-icon>
+            <span>{{ deuda.productos.length }} producto(s)</span>
+          </div>
+
+          <div class="deuda-footer">
+            <div class="montos">
+              <div class="monto-item">
+                <span class="label">Total:</span>
+                <span class="valor">{{ formatearMoneda(deuda.total) }}</span>
+              </div>
+              <div class="monto-item pendiente">
+                <span class="label">Pendiente:</span>
+                <span class="valor">{{ formatearMoneda(deuda.saldoPendiente) }}</span>
+              </div>
+            </div>
+          </div>
+
+          <p *ngIf="deuda.notas" class="notas">
+            <ion-icon name="document-text"></ion-icon>
+            {{ deuda.notas }}
+          </p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Deudas Pagadas -->
+    <div *ngIf="deudasPagadas.length > 0">
+      <h2 class="section-title">Historial (Pagadas)</h2>
+      <ion-card *ngFor="let deuda of deudasPagadas" class="deuda-card pagada" (click)="verDetalleDeuda(deuda)">
+        <ion-card-content>
+          <div class="deuda-header">
+            <div class="fecha">
+              <ion-icon name="calendar"></ion-icon>
+              {{ formatearFecha(deuda.fecha) }}
+            </div>
+            <ion-badge color="success">Pagada</ion-badge>
+          </div>
+
+          <div class="deuda-productos">
+            <ion-icon name="cart"></ion-icon>
+            <span>{{ deuda.productos.length }} producto(s)</span>
+          </div>
+
+          <div class="deuda-footer">
+            <div class="montos">
+              <div class="monto-item">
+                <span class="label">Total:</span>
+                <span class="valor">{{ formatearMoneda(deuda.total) }}</span>
+              </div>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Mensaje si no hay deudas -->
+    <div *ngIf="deudas.length === 0" class="empty-state">
+      <ion-icon name="cart" size="large" color="medium"></ion-icon>
+      <h2>No hay deudas registradas</h2>
+      <p>Agrega la primera deuda de este cliente</p>
+    </div>
+
+  </div>
+
+  <!-- Botón flotante para agregar deuda -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="agregarDeuda()" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

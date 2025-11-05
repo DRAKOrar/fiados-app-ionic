@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/dashboard">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Mis Clientes</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="Buscar cliente..."
+      (ionInput)="buscarClientes($event)"
+      animated="true">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <!-- Mensaje si no hay clientes -->
+    <div *ngIf="clientes.length === 0" class="empty-state">
+      <ion-icon name="person" size="large" color="medium"></ion-icon>
+      <h2>No hay clientes registrados</h2>
+      <p>Agrega tu primer cliente para empezar a registrar deudas</p>
+    </div>
+
+    <!-- Lista de clientes -->
+    <ion-list *ngIf="clientesFiltrados.length > 0">
+      <ion-item
+        *ngFor="let cliente of clientesFiltrados"
+        button
+        (click)="verDetalleCliente(cliente)"
+        detail="true">
+        <ion-icon name="person" slot="start" color="primary"></ion-icon>
+        <ion-label>
+          <h2>{{ cliente.nombre }}</h2>
+          <p *ngIf="cliente.telefono">{{ cliente.telefono }}</p>
+          <p class="saldo" [class.deuda]="cliente.saldoTotal > 0">
+            Saldo: {{ formatearMoneda(cliente.saldoTotal) }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!-- Mensaje si no hay resultados de búsqueda -->
+    <div *ngIf="clientesFiltrados.length === 0 && clientes.length > 0" class="empty-state">
+      <ion-icon name="search" size="large" color="medium"></ion-icon>
+      <h2>No se encontraron resultados</h2>
+      <p>Intenta con otro término de búsqueda</p>
+    </div>
+  </div>
+
+  <!-- Botón flotante para agregar cliente -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="agregarCliente()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
