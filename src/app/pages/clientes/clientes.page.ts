@@ -10,7 +10,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { add, person, cash, search } from 'ionicons/icons';
+import { add, person, cash, search, personOutline, callOutline, chevronForward, searchOutline, refresh } from 'ionicons/icons';
 import { DeudasService } from 'src/app/services/deudas';
 import { Cliente } from '../../models/cliente.model';
 import { home } from 'ionicons/icons'; // Agregar al import
@@ -37,7 +37,7 @@ export class ClientesPage implements OnInit {
     private deudasService: DeudasService,
     private router: Router
   ) {
-    addIcons({person,search,add,cash, home });
+    addIcons({home,personOutline,add,callOutline,chevronForward,searchOutline,refresh,person,search,cash});
   }
 
   async ngOnInit() {
@@ -83,4 +83,17 @@ export class ClientesPage implements OnInit {
       minimumFractionDigits: 0
     }).format(valor);
   }
+
+    // Función para limpiar la búsqueda
+  limpiarBusqueda() {
+    this.buscando = '';
+    this.clientesFiltrados = [...this.clientes];
+
+    // También puedes limpiar el searchbar si es necesario
+    const searchbar = document.querySelector('ion-searchbar');
+    if (searchbar) {
+      (searchbar as any).value = '';
+    }
+  }
+
 }

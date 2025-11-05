@@ -1,73 +1,55 @@
-/* Definición de la paleta de colores */
-:root {
-  --app-color-primary: #BF092F;
-  --app-color-dark-bg: #132440;
-  --app-color-secondary: #16476A;
-  --app-color-accent: #3B9797;
-}
-
-/* Aplicar el color de fondo principal para toda la aplicación */
-ion-content {
-  --background: var(--app-color-dark-bg);
-}
-
 .container {
   padding: 16px;
   padding-bottom: 80px;
-}
-
-/* Estilos para el encabezado y título */
-ion-header {
-  ion-toolbar {
-    --background: var(--app-color-dark-bg); /* Opcional: Oscurecer el header */
-    color: white; /* Color del texto del header */
-  }
+  background: #132440;
 }
 
 ion-title {
-  color: white;
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
 
   ion-icon {
     font-size: 24px;
-    color: var(--app-color-accent);
   }
 }
 
-/* --- Tarjetas de Estadísticas (Stats-Grid) --- */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
   margin: 0;
-  border-radius: 10px; /* Bordes más suaves */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra para profundidad */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
 
   ion-card-content {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px;
+    padding: 20px;
   }
 
   .stat-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%; /* Icono circular */
-    background: rgba(255, 255, 255, 0.2); /* Fondo sutil para el icono */
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.2);
 
     ion-icon {
-      font-size: 24px; /* Icono un poco más pequeño */
+      font-size: 28px;
       color: white;
     }
   }
@@ -76,80 +58,109 @@ ion-title {
     flex: 1;
 
     h2 {
-      font-size: 20px; /* Hacer los números más grandes */
+      font-size: 18px;
       font-weight: 700;
-      margin: 0 0 2px 0; /* Espacio ajustado */
+      margin: 0 0 4px 0;
       color: white;
     }
 
     p {
-      font-size: 11px; /* Etiqueta más pequeña */
+      font-size: 12px;
       margin: 0;
-      color: rgba(255, 255, 255, 0.7);
-      text-transform: uppercase; /* Darle un toque moderno a la etiqueta */
+      color: rgba(255, 255, 255, 0.9);
     }
   }
 
-  /* Aplicación de la paleta a las tarjetas */
   &.primary {
-    background: var(--app-color-primary); /* #BF092F */
+    background: linear-gradient(135deg, #16476A 0%, #3B9797 100%);
   }
+
   &.success {
-    background: var(--app-color-accent); /* #3B9797 */
+    background: linear-gradient(135deg, #11998e 0%, #3B9797 100%);
   }
+
   &.info {
-    background: var(--app-color-secondary); /* #16476A */
+    background: linear-gradient(135deg, #132440 0%, #16476A 100%);
   }
+
   &.clients {
-    /* Usar un color secundario o mezclar, aquí una variación de azul oscuro */
-    background: linear-gradient(135deg, var(--app-color-dark-bg) 0%, var(--app-color-secondary) 100%);
+    background: linear-gradient(135deg, #BF092F 0%, #fa709a 100%);
   }
 }
 
-/* --- Resumen de Deudas --- */
-/* Cambiar el fondo de la tarjeta de resumen para que contraste con el fondo oscuro */
-ion-card {
-  --background: white;
-  color: var(--ion-color-dark);
-  border-radius: 10px;
-  margin: 0 0 16px 0; /* Ajustar margen inferior */
+.card-elevated {
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.card-header-custom {
+  padding-bottom: 8px;
+
+  ion-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #132440;
+  }
 }
 
 .deudas-resumen {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  padding: 8px 0; /* Espacio interno para el contenido del resumen */
 
   .resumen-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 8px; /* Pequeño padding interno */
-    border-radius: 8px;
 
-    ion-icon {
-      font-size: 32px; /* Icono un poco más pequeño */
-      margin-bottom: 4px; /* Espacio ajustado */
+    .resumen-icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+
+      ion-icon {
+        font-size: 28px;
+        color: white;
+      }
+
+      &.primary {
+        background: #16476A;
+      }
+
+      &.success {
+        background: #3B9797;
+      }
+
+      &.warning {
+        background: #BF092F;
+      }
     }
 
     h3 {
-      font-size: 20px; /* Números un poco más pequeños para este resumen */
+      font-size: 24px;
       font-weight: 700;
-      margin: 0;
-      color: var(--ion-color-dark);
+      margin: 0 0 4px 0;
+      color: #132440;
     }
 
     p {
-      font-size: 11px; /* Etiqueta más pequeña */
+      font-size: 12px;
       margin: 0;
-      color: var(--ion-color-medium);
+      color: #666;
     }
   }
 }
-
-/* --- Listas de Clientes y Deudas --- */
 
 .card-header-with-action {
   display: flex;
@@ -157,27 +168,69 @@ ion-card {
   align-items: center;
 
   ion-card-title {
-    font-size: 18px; /* Títulos de tarjeta más claros */
-    font-weight: 600;
-    color: var(--ion-color-dark);
+    font-size: 18px;
   }
 }
 
-ion-list {
-  background: white; /* Asegurar fondo blanco en la lista */
-  padding: 0; /* Eliminar padding por defecto */
+.btn-see-all {
+  --color: #3B9797;
+  --background: transparent;
+  font-weight: 500;
 }
 
-ion-item {
-  --padding-start: 0; /* Ajustar padding de inicio del ítem */
-  --inner-padding-end: 0; /* Ajustar padding final del inner item */
-  --border-color: #eee; /* Borde más sutil entre ítems */
+.custom-list {
+  background: transparent;
+  padding: 0;
+}
+
+.custom-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --border-color: rgba(0, 0, 0, 0.05);
+  margin-bottom: 8px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    --background: rgba(59, 151, 151, 0.05);
+  }
+}
+
+.item-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 12px;
+
+  ion-icon {
+    font-size: 20px;
+    color: white;
+  }
+
+  &.primary {
+    background: #16476A;
+  }
+
+  &.success {
+    background: #3B9797;
+  }
+
+  &.warning {
+    background: #BF092F;
+  }
 }
 
 .cliente-saldo {
   font-weight: 700;
   font-size: 16px;
-  color: var(--app-color-primary); /* Usar el rojo oscuro para la deuda */
+  color: #BF092F;
 }
 
 .deuda-info {
@@ -189,37 +242,95 @@ ion-item {
   .monto {
     font-weight: 600;
     font-size: 14px;
-    color: var(--ion-color-dark);
-  }
-
-  ion-badge {
-    /* Ajustar los colores de los badges */
-    &[color="success"] {
-      --background: var(--app-color-accent); /* Turquesa */
-    }
-    &[color="warning"] {
-      --background: var(--app-color-secondary); /* Azul medio */
-      color: white;
-    }
+    color: #132440;
   }
 }
 
-/* --- Estado Vacío --- */
+.badge-success, .badge-warning {
+  font-size: 10px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.badge-success {
+  background: #3B9797;
+  color: white;
+}
+
+.badge-warning {
+  background: #BF092F;
+  color: white;
+}
+
 .empty-state {
-  /* Mantener estilos existentes pero ajustar colores a la paleta si es necesario */
-  ion-icon {
-    color: var(--app-color-secondary); /* Icono con color de la paleta */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  .empty-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(59, 151, 151, 0.1);
+    margin-bottom: 24px;
+
+    ion-icon {
+      font-size: 60px;
+      color: #3B9797;
+    }
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #132440;
+  }
+
+  p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 24px;
+    line-height: 1.5;
   }
 }
 
-/* --- Botón Flotante --- */
-ion-fab-button {
-  --background: var(--app-color-primary); /* Usar el color principal para el FAB */
+.btn-primary {
+  --background: #16476A;
+  --background-activated: #132440;
+  --background-hover: #3B9797;
+  --color: white;
+  --border-radius: 12px;
+  font-weight: 600;
+  height: 48px;
 }
 
-/* Media Query: Mantener la adaptación a móviles */
+.fab-primary {
+  --background: #BF092F;
+  --background-activated: #132440;
+  --background-hover: #16476A;
+}
+
 @media (max-width: 576px) {
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    .stat-info h2 {
+      font-size: 20px;
+    }
+  }
+
+  .deudas-resumen {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }

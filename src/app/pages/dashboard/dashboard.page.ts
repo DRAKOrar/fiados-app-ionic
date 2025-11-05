@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent, IonHeader, IonTitle, IonToolbar,
-  IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-  IonButton, IonIcon, IonList, IonItem, IonLabel,
-  IonBadge, IonGrid, IonRow, IonCol, IonRefresher,
-  IonRefresherContent, IonFab, IonFabButton, IonButtons, IonAvatar } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonIcon, IonList, IonItem, IonLabel, IonBadge, IonGrid, IonRow, IonCol, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonButtons, IonAvatar, IonRouterLinkWithHref } from '@ionic/angular/standalone';
+import { Router, RouterLinkActive } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   people, cash, trendingUp, checkmarkCircle,
@@ -28,7 +23,7 @@ import { search } from 'ionicons/icons'; // Agregar
     IonCard, IonCardHeader, IonCardTitle, IonCardContent,
     IonButton, IonIcon, IonList, IonItem, IonLabel,
     IonBadge, IonGrid, IonRow, IonCol, IonRefresher,
-    IonRefresherContent, IonFab, IonFabButton]
+    IonRefresherContent, IonFab, IonFabButton, RouterLinkActive, IonRouterLinkWithHref]
 })
 export class DashboardPage implements OnInit {
 

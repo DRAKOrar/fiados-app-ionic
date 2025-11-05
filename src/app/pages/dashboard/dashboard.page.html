@@ -1,11 +1,13 @@
 <ion-header [translucent]="true">
-  <ion-toolbar> <ion-title>
-      <ion-icon name="stats-chart"></ion-icon>
+  <ion-toolbar style="--background: #132440; --color: white;">
+    <ion-title>
+      <ion-icon name="stats-chart" style="color: #3B9797;"></ion-icon>
       &nbsp;Mi Negocio
     </ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="irABusqueda()" color="light"> <ion-icon name="search"></ion-icon>
+      <ion-button (click)="irABusqueda()" style="--color: white;">
+        <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -13,12 +15,16 @@
 
 <ion-content [fullscreen]="true">
   <ion-refresher slot="fixed" (ionRefresh)="refrescar($event)">
-    <ion-refresher-content pullingIcon="arrow-down" pullingText="Desliza para actualizar" refreshingSpinner="circles">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Desliza para actualizar"
+      refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
 
   <div class="container">
 
+    <!-- Estadísticas principales -->
     <div class="stats-grid">
       <ion-card class="stat-card primary">
         <ion-card-content>
@@ -69,30 +75,35 @@
       </ion-card>
     </div>
 
-    <ion-card>
-      <ion-card-header>
-        <div class="card-header-with-action">
-          <ion-card-title>Resumen de Deudas</ion-card-title>
-        </div>
+    <!-- Resumen de deudas -->
+    <ion-card class="card-elevated">
+      <ion-card-header class="card-header-custom">
+        <ion-card-title>Resumen de Deudas</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <div class="deudas-resumen">
           <div class="resumen-item">
-            <ion-icon name="time-outline" color="secondary"></ion-icon>
+            <div class="resumen-icon-container warning">
+              <ion-icon name="time-outline"></ion-icon>
+            </div>
             <div>
               <h3>{{ estadisticas.deudasPendientesCount }}</h3>
               <p>Pendientes</p>
             </div>
           </div>
           <div class="resumen-item">
-            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <div class="resumen-icon-container success">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
             <div>
               <h3>{{ estadisticas.deudasPagadasCount }}</h3>
               <p>Pagadas</p>
             </div>
           </div>
           <div class="resumen-item">
-            <ion-icon name="cart" color="primary"></ion-icon>
+            <div class="resumen-icon-container primary">
+              <ion-icon name="cart"></ion-icon>
+            </div>
             <div>
               <h3>{{ estadisticas.totalDeudas }}</h3>
               <p>Total</p>
@@ -102,20 +113,27 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card *ngIf="estadisticas.clientesConDeuda.length > 0">
-      <ion-card-header>
+    <!-- Top clientes con deuda -->
+    <ion-card class="card-elevated" *ngIf="estadisticas.clientesConDeuda.length > 0">
+      <ion-card-header class="card-header-custom">
         <div class="card-header-with-action">
           <ion-card-title>Clientes con Mayor Deuda</ion-card-title>
-          <ion-button fill="clear" size="small" (click)="verClientes()" color="primary">
+          <ion-button fill="clear" size="small" class="btn-see-all" (click)="verClientes()">
             Ver todos
           </ion-button>
         </div>
       </ion-card-header>
-      <ion-card-content class="ion-no-padding"> <ion-list lines="inset"> <ion-item
-            *ngFor="let cliente of estadisticas.clientesConDeuda" button (click)="verCliente(cliente)" detail="true">
-            <ion-avatar slot="start" class="ion-margin-end" color="primary">
-              <ion-icon name="person" color="light"></ion-icon>
-            </ion-avatar>
+      <ion-card-content>
+        <ion-list class="custom-list">
+          <ion-item
+            *ngFor="let cliente of estadisticas.clientesConDeuda"
+            button
+            (click)="verCliente(cliente)"
+            detail="true"
+            class="custom-item">
+            <div class="item-icon-container" slot="start">
+              <ion-icon name="person"></ion-icon>
+            </div>
             <ion-label>
               <h3>{{ cliente.nombre }}</h3>
               <p *ngIf="cliente.telefono">{{ cliente.telefono }}</p>
@@ -128,20 +146,29 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card *ngIf="estadisticas.deudasRecientes.length > 0">
-      <ion-card-header>
+    <!-- Deudas recientes -->
+    <ion-card class="card-elevated" *ngIf="estadisticas.deudasRecientes.length > 0">
+      <ion-card-header class="card-header-custom">
         <ion-card-title>Actividad Reciente</ion-card-title>
       </ion-card-header>
-      <ion-card-content class="ion-no-padding"> <ion-list lines="inset">
-          <ion-item *ngFor="let deuda of estadisticas.deudasRecientes" button (click)="verDeuda(deuda)" detail="true">
-            <ion-icon name="receipt" slot="start"
-              [color]="deuda.estado === 'pagada' ? 'success' : 'warning'"></ion-icon> <ion-label>
+      <ion-card-content>
+        <ion-list class="custom-list">
+          <ion-item
+            *ngFor="let deuda of estadisticas.deudasRecientes"
+            button
+            (click)="verDeuda(deuda)"
+            detail="true"
+            class="custom-item">
+            <div class="item-icon-container" slot="start" [class]="deuda.estado === 'pagada' ? 'success' : 'warning'">
+              <ion-icon name="cart"></ion-icon>
+            </div>
+            <ion-label>
               <h3>{{ deuda.clienteNombre }}</h3>
               <p>{{ formatearFecha(deuda.fecha) }} · {{ deuda.productos.length }} producto(s)</p>
             </ion-label>
             <div slot="end" class="deuda-info">
               <div class="monto">{{ formatearMoneda(deuda.total) }}</div>
-              <ion-badge [color]="deuda.estado === 'pagada' ? 'success' : 'warning'">
+              <ion-badge [class]="deuda.estado === 'pagada' ? 'badge-success' : 'badge-warning'">
                 {{ deuda.estado === 'pagada' ? 'Pagada' : 'Pendiente' }}
               </ion-badge>
             </div>
@@ -150,20 +177,24 @@
       </ion-card-content>
     </ion-card>
 
+    <!-- Mensaje si no hay datos -->
     <div *ngIf="estadisticas.totalClientes === 0" class="empty-state">
-      <ion-icon name="person-add" size="large" color="medium"></ion-icon>
+      <div class="empty-icon-container">
+        <ion-icon name="person-add"></ion-icon>
+      </div>
       <h2>¡Bienvenido!</h2>
       <p>Comienza agregando tu primer cliente y registrando deudas</p>
-      <ion-button (click)="agregarCliente()" expand="block" color="primary"> <ion-icon name="add"
-          slot="start"></ion-icon>
+      <ion-button (click)="agregarCliente()" expand="block" class="btn-primary">
+        <ion-icon name="add" slot="start"></ion-icon>
         Agregar Cliente
       </ion-button>
     </div>
 
   </div>
 
+  <!-- Botón flotante -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="estadisticas.totalClientes > 0">
-    <ion-fab-button (click)="agregarCliente()">
+    <ion-fab-button class="fab-primary" (click)="agregarCliente()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

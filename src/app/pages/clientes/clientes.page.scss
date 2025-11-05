@@ -1,5 +1,123 @@
 .container {
   padding: 16px;
+  padding-bottom: 80px;
+  background: #f8f9fa;
+  min-height: 100%;
+}
+
+.custom-searchbar {
+  --box-shadow: 0 2px 8px rgba(19, 36, 64, 0.1);
+  margin: 8px 0;
+}
+
+.custom-list {
+  background: transparent;
+  padding: 0;
+}
+
+.cliente-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  --border-color: rgba(0, 0, 0, 0.05);
+  margin-bottom: 12px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.avatar-container {
+  margin-right: 16px;
+}
+
+.cliente-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16476A 0%, #3B9797 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  box-shadow: 0 4px 8px rgba(22, 71, 106, 0.2);
+}
+
+.cliente-info {
+  margin: 12px 0;
+}
+
+.cliente-nombre {
+  font-size: 16px;
+  font-weight: 600;
+  color: #132440;
+  margin-bottom: 6px;
+}
+
+.cliente-telefono {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+
+  ion-icon {
+    font-size: 16px;
+    color: #3B9797;
+  }
+}
+
+.saldo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.saldo-label {
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+}
+
+.saldo {
+  font-size: 15px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: #f0f0f0;
+
+  &.deuda {
+    background: rgba(191, 9, 47, 0.1);
+    color: #BF092F;
+  }
+
+  &.saldo-cero {
+    background: rgba(59, 151, 151, 0.1);
+    color: #3B9797;
+  }
+}
+
+.item-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 12px;
+
+  ion-icon {
+    font-size: 18px;
+  }
 }
 
 .empty-state {
@@ -7,38 +125,177 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
   text-align: center;
+  height: 60vh;
+}
+
+.empty-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(59, 151, 151, 0.1);
+  margin-bottom: 24px;
 
   ion-icon {
-    font-size: 80px;
-    margin-bottom: 20px;
-  }
-
-  h2 {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--ion-color-dark);
-  }
-
-  p {
-    color: var(--ion-color-medium);
-    font-size: 14px;
+    font-size: 60px;
+    color: #3B9797;
   }
 }
 
-.saldo {
+.empty-state h2 {
+  font-size: 22px;
   font-weight: 600;
-  font-size: 14px;
-  margin-top: 4px;
+  margin-bottom: 12px;
+  color: #132440;
+}
 
-  &.deuda {
-    color: var(--ion-color-danger);
+.empty-state p {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.btn-primary {
+  --background: #16476A;
+  --background-activated: #132440;
+  --background-hover: #3B9797;
+  --color: white;
+  --border-radius: 12px;
+  font-weight: 600;
+  height: 48px;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.btn-outline {
+  --border-color: #16476A;
+  --color: #16476A;
+  --border-radius: 12px;
+  --border-width: 2px;
+  font-weight: 600;
+  height: 44px;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.fab-primary {
+  --background: #BF092F;
+  --background-activated: #132440;
+  --background-hover: #16476A;
+}
+
+/* Estadísticas rápidas en header cuando hay clientes */
+.clientes-stats {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .stat-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: #132440;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+  }
+
+  &.total-clientes .stat-number {
+    color: #16476A;
+  }
+
+  &.con-deuda .stat-number {
+    color: #BF092F;
+  }
+
+  &.saldo-total .stat-number {
+    color: #3B9797;
   }
 }
 
-ion-item {
-  --padding-start: 16px;
-  margin-bottom: 8px;
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cliente-item {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Estados de carga */
+.loading-skeleton {
+  .cliente-item {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 12px;
+    padding-bottom: 80px;
+  }
+
+  .cliente-item {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    margin-bottom: 8px;
+  }
+
+  .cliente-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .empty-state {
+    padding: 40px 20px;
+    height: 50vh;
+  }
+
+  .empty-icon-container {
+    width: 100px;
+    height: 100px;
+
+    ion-icon {
+      font-size: 50px;
+    }
+  }
 }

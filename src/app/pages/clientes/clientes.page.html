@@ -1,17 +1,19 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #132440; --color: white;">
     <ion-buttons slot="start">
-      <ion-button routerLink="/dashboard">
+      <ion-button routerLink="/dashboard" style="--color: white;">
         <ion-icon name="home"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>Mis Clientes</ion-title>
   </ion-toolbar>
-  <ion-toolbar>
+  <ion-toolbar style="--background: #16476A;">
     <ion-searchbar
       placeholder="Buscar cliente..."
       (ionInput)="buscarClientes($event)"
-      animated="true">
+      animated="true"
+      style="--background: white; --border-radius: 12px;"
+      class="custom-searchbar">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -20,40 +22,66 @@
   <div class="container">
     <!-- Mensaje si no hay clientes -->
     <div *ngIf="clientes.length === 0" class="empty-state">
-      <ion-icon name="person" size="large" color="medium"></ion-icon>
+      <div class="empty-icon-container">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
       <h2>No hay clientes registrados</h2>
       <p>Agrega tu primer cliente para empezar a registrar deudas</p>
+      <ion-button (click)="agregarCliente()" expand="block" class="btn-primary">
+        <ion-icon name="add" slot="start"></ion-icon>
+        Agregar Primer Cliente
+      </ion-button>
     </div>
 
     <!-- Lista de clientes -->
-    <ion-list *ngIf="clientesFiltrados.length > 0">
+    <ion-list *ngIf="clientesFiltrados.length > 0" class="custom-list">
       <ion-item
         *ngFor="let cliente of clientesFiltrados"
         button
         (click)="verDetalleCliente(cliente)"
-        detail="true">
-        <ion-icon name="person" slot="start" color="primary"></ion-icon>
-        <ion-label>
-          <h2>{{ cliente.nombre }}</h2>
-          <p *ngIf="cliente.telefono">{{ cliente.telefono }}</p>
-          <p class="saldo" [class.deuda]="cliente.saldoTotal > 0">
-            Saldo: {{ formatearMoneda(cliente.saldoTotal) }}
+        detail="true"
+        class="cliente-item">
+        <div class="avatar-container" slot="start">
+          <div class="cliente-avatar">
+            {{ cliente.nombre.charAt(0).toUpperCase() }}
+          </div>
+        </div>
+        <ion-label class="cliente-info">
+          <h2 class="cliente-nombre">{{ cliente.nombre }}</h2>
+          <p class="cliente-telefono" *ngIf="cliente.telefono">
+            <ion-icon name="call-outline"></ion-icon>
+            {{ cliente.telefono }}
           </p>
+          <div class="saldo-container">
+            <span class="saldo-label">Saldo:</span>
+            <span class="saldo" [class.deuda]="cliente.saldoTotal > 0" [class.saldo-cero]="cliente.saldoTotal === 0">
+              {{ formatearMoneda(cliente.saldoTotal) }}
+            </span>
+          </div>
         </ion-label>
+        <div class="item-arrow">
+          <ion-icon name="chevron-forward" color="medium"></ion-icon>
+        </div>
       </ion-item>
     </ion-list>
 
     <!-- Mensaje si no hay resultados de búsqueda -->
     <div *ngIf="clientesFiltrados.length === 0 && clientes.length > 0" class="empty-state">
-      <ion-icon name="search" size="large" color="medium"></ion-icon>
+      <div class="empty-icon-container">
+        <ion-icon name="search-outline"></ion-icon>
+      </div>
       <h2>No se encontraron resultados</h2>
       <p>Intenta con otro término de búsqueda</p>
+      <ion-button (click)="limpiarBusqueda()" fill="outline" expand="block" class="btn-outline">
+        <ion-icon name="refresh" slot="start"></ion-icon>
+        Mostrar Todos
+      </ion-button>
     </div>
   </div>
 
   <!-- Botón flotante para agregar cliente -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="agregarCliente()">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="clientes.length > 0">
+    <ion-fab-button class="fab-primary" (click)="agregarCliente()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

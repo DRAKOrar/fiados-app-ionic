@@ -41,3 +41,18 @@
   --app-color-secondary: #16476A;
   --app-color-accent: #3B9797;
 }
+
+:host {
+  /* Paleta */
+  --app-accent:   #BF092F; /* rojo */
+  --app-primary:  #132440; /* navy */
+  --app-secondary:#16476A; /* azul petróleo */
+  --app-teal:     #3B9797; /* teal */
+
+  /* Derivados */
+  --app-on-dark:  #ffffff;
+  --app-on-light: #0f1a2c;
+  --app-surface:  #ffffff;
+  --app-surface-2: rgba(255,255,255,0.85);
+  --app-shadow: 0 8px 24px rgba(0,0,0,.18);
+} 
