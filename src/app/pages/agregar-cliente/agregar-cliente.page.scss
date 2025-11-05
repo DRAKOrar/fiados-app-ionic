@@ -1,17 +1,265 @@
 .container {
-  padding: 20px;
+  padding: 16px;
+  padding-bottom: 40px;
+  background: #f8f9fa;
+  min-height: 100%;
 }
 
-ion-item {
+.form-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 16px;
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #16476A 0%, #3B9797 100%);
+  margin: 0 auto 16px;
+
+  ion-icon {
+    font-size: 40px;
+    color: white;
+  }
+}
+
+.form-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #132440;
+  margin-bottom: 8px;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.custom-form {
+  margin-bottom: 20px;
+}
+
+.form-card {
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.custom-input {
   --padding-start: 0;
   --inner-padding-end: 0;
-  margin-bottom: 16px;
+  --background: transparent;
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.input-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(59, 151, 151, 0.1);
+  margin-right: 16px;
+
+  ion-icon {
+    font-size: 20px;
+    color: #3B9797;
+  }
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #132440;
+  margin-bottom: 8px;
+}
+
+.custom-field {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-size: 16px;
+  --placeholder-color: #999;
+  --placeholder-opacity: 1;
+  border-bottom: 2px solid #e0e0e0;
+  transition: border-color 0.3s ease;
+
+  &.ion-focused {
+    border-bottom-color: #16476A;
+    --placeholder-color: #16476A;
+  }
+
+  &.ion-valid {
+    border-bottom-color: #3B9797;
+  }
+
+  &.ion-invalid {
+    border-bottom-color: #BF092F;
+  }
 }
 
 .buttons {
-  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 8px;
+}
 
-  ion-button {
-    margin-bottom: 12px;
+.btn-primary {
+  --background: #16476A;
+  --background-activated: #132440;
+  --background-hover: #3B9797;
+  --color: white;
+  --border-radius: 14px;
+  --box-shadow: 0 4px 12px rgba(22, 71, 106, 0.3);
+  font-weight: 600;
+  height: 50px;
+  margin: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    --box-shadow: 0 6px 16px rgba(22, 71, 106, 0.4);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    --background: #cccccc;
+    --box-shadow: none;
+    transform: none;
+  }
+}
+
+.btn-outline {
+  --border-color: #16476A;
+  --color: #16476A;
+  --border-radius: 14px;
+  --border-width: 2px;
+  font-weight: 600;
+  height: 50px;
+  margin: 0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    --background: rgba(22, 71, 106, 0.05);
+  }
+}
+
+.form-info {
+  text-align: center;
+  margin-top: 20px;
+
+  p {
+    font-size: 12px;
+    color: #999;
+    margin: 0;
+  }
+}
+
+/* Estados de validación */
+.validation-message {
+  font-size: 12px;
+  color: #BF092F;
+  margin-top: 4px;
+  padding-left: 60px; /* Alineado con el contenido del input */
+}
+
+/* Animaciones */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-card {
+  animation: slideIn 0.4s ease-out;
+}
+
+.buttons {
+  animation: slideIn 0.4s ease-out 0.1s both;
+}
+
+/* Efectos de focus mejorados */
+ion-item.custom-input:focus-within {
+  .input-icon {
+    background: rgba(22, 71, 106, 0.15);
+
+    ion-icon {
+      color: #16476A;
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 12px;
+    padding-bottom: 40px;
+  }
+
+  .form-header {
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 22px;
+    }
+  }
+
+  .header-icon {
+    width: 70px;
+    height: 70px;
+
+    ion-icon {
+      font-size: 35px;
+    }
+  }
+
+  .form-card {
+    border-radius: 16px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  .btn-primary,
+  .btn-outline {
+    height: 48px;
+    font-size: 15px;
+  }
+}
+
+/* Estados de carga */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Mejora para textarea */
+ion-textarea.custom-field {
+  min-height: 80px;
+
+  .native-textarea {
+    line-height: 1.4;
   }
 }

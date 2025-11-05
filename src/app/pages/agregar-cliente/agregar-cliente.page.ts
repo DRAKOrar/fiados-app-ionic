@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar,
   IonButton, IonInput, IonItem, IonLabel,
-  IonBackButton, IonButtons, IonTextarea
-} from '@ionic/angular/standalone';
+  IonBackButton, IonButtons, IonTextarea, IonIcon, IonCardContent, IonCard } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { DeudasService } from 'src/app/services/deudas';
 
@@ -14,7 +13,7 @@ import { DeudasService } from 'src/app/services/deudas';
   templateUrl: './agregar-cliente.page.html',
   styleUrls: ['./agregar-cliente.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CommonModule,
+  imports: [IonCard, IonCardContent, IonIcon, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, CommonModule,
     FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar,
     IonButton, IonInput, IonItem, IonLabel,

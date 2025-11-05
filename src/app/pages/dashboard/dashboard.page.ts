@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonButton, IonIcon, IonList, IonItem, IonLabel, IonBadge, IonGrid, IonRow, IonCol, IonRefresher, IonRefresherContent, IonFab, IonFabButton, IonButtons, IonAvatar, IonRouterLinkWithHref } from '@ionic/angular/standalone';
 import { Router, RouterLinkActive } from '@angular/router';
 import { addIcons } from 'ionicons';
+
 import {
   people, cash, trendingUp, checkmarkCircle,
   timeOutline, wallet, cart, refreshOutline,time,
-  add, statsChart, personAdd, person, home, list, receipt } from 'ionicons/icons';
+  add, statsChart, personAdd, person, home, list, receipt, settingsOutline } from 'ionicons/icons';
 import { DeudasService } from 'src/app/services/deudas';
 import { Cliente } from '../../models/cliente.model';
 import { Deuda } from '../../models/deuda.model';
@@ -43,7 +44,7 @@ export class DashboardPage implements OnInit {
     private deudasService: DeudasService,
     private router: Router
   ) {
-    addIcons({statsChart,search,cash,wallet,trendingUp,people,timeOutline,checkmarkCircle,cart,person,receipt,personAdd,add,list,time,home,refreshOutline});
+    addIcons({statsChart,search,settingsOutline,cash,wallet,trendingUp,people,timeOutline,checkmarkCircle,cart,person,personAdd,add,receipt,list,time,home,refreshOutline});
   }
 
   async ngOnInit() {

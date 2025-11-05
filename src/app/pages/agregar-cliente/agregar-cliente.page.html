@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar style="--background: #132440; --color: white;">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/clientes"></ion-back-button>
+      <ion-back-button defaultHref="/clientes" style="--color: white;"></ion-back-button>
     </ion-buttons>
     <ion-title>Nuevo Cliente</ion-title>
   </ion-toolbar>
@@ -9,46 +9,77 @@
 
 <ion-content [fullscreen]="true">
   <div class="container">
-    <form>
-      <ion-item>
-        <ion-label position="stacked">Nombre *</ion-label>
-        <ion-input
-          [(ngModel)]="nombre"
-          name="nombre"
-          type="text"
-          placeholder="Ej: Juan Pérez"
-          required>
-        </ion-input>
-      </ion-item>
+    <div class="form-header">
+      <div class="header-icon">
+        <ion-icon name="person-add"></ion-icon>
+      </div>
+      <h2>Información del Cliente</h2>
+      <p>Completa los datos para agregar un nuevo cliente</p>
+    </div>
 
-      <ion-item>
-        <ion-label position="stacked">Teléfono</ion-label>
-        <ion-input
-          [(ngModel)]="telefono"
-          name="telefono"
-          type="tel"
-          placeholder="Ej: 3001234567">
-        </ion-input>
-      </ion-item>
+    <form class="custom-form">
+      <ion-card class="form-card">
+        <ion-card-content>
+          <ion-item class="custom-input" lines="none">
+            <div class="input-icon" slot="start">
+              <ion-icon name="person-circle"></ion-icon>
+            </div>
+            <ion-label position="stacked" class="input-label">Nombre *</ion-label>
+            <ion-input
+              [(ngModel)]="nombre"
+              name="nombre"
+              type="text"
+              placeholder="Ej: Juan Pérez"
+              required
+              class="custom-field">
+            </ion-input>
+          </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Dirección</ion-label>
-        <ion-textarea
-          [(ngModel)]="direccion"
-          name="direccion"
-          rows="2"
-          placeholder="Ej: Calle 123 #45-67">
-        </ion-textarea>
-      </ion-item>
+          <ion-item class="custom-input" lines="none">
+            <div class="input-icon" slot="start">
+              <ion-icon name="call"></ion-icon>
+            </div>
+            <ion-label position="stacked" class="input-label">Teléfono</ion-label>
+            <ion-input
+              [(ngModel)]="telefono"
+              name="telefono"
+              type="tel"
+              placeholder="Ej: 3001234567"
+              class="custom-field">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="custom-input" lines="none">
+            <div class="input-icon" slot="start">
+              <ion-icon name="location"></ion-icon>
+            </div>
+            <ion-label position="stacked" class="input-label">Dirección</ion-label>
+            <ion-textarea
+              [(ngModel)]="direccion"
+              name="direccion"
+              rows="3"
+              placeholder="Ej: Calle 123 #45-67"
+              class="custom-field">
+            </ion-textarea>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
 
       <div class="buttons">
-        <ion-button expand="block" (click)="guardarCliente()" color="primary">
+        <ion-button expand="block" (click)="guardarCliente()" class="btn-primary" [disabled]="!nombre">
+          <ion-icon name="save" slot="start"></ion-icon>
           Guardar Cliente
         </ion-button>
-        <ion-button expand="block" (click)="cancelar()" fill="outline" color="medium">
+        <ion-button expand="block" (click)="cancelar()" fill="outline" class="btn-outline">
+          <ion-icon name="close" slot="start"></ion-icon>
           Cancelar
         </ion-button>
       </div>
     </form>
+
+    <!-- Información de campos requeridos -->
+    <div class="form-info">
+      <p>* Campos obligatorios</p>
+    </div>
   </div>
 </ion-content>

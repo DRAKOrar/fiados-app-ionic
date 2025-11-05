@@ -12,11 +12,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   calendar, cart, cash, checkmarkCircle,
-  documentText, person, walletOutline
-} from 'ionicons/icons';
+  documentText, person, walletOutline, shareSocial } from 'ionicons/icons';
 import { DeudasService } from 'src/app/services/deudas';
 import { Deuda } from '../../models/deuda.model';
 import { Abono } from '../../models/abono.model';
+import { ExportarService } from 'src/app/services/exportar';
+
 @Component({
   selector: 'app-detalle-deuda',
   templateUrl: './detalle-deuda.page.html',
@@ -41,16 +42,24 @@ export class DetalleDeudaPage implements OnInit {
   notasAbono: string = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private deudasService: DeudasService,
-    private alertController: AlertController
-  ) {
-    addIcons({
-      calendar, cart, cash, checkmarkCircle,
-      documentText, person, walletOutline
-    });
+  private route: ActivatedRoute,
+  private router: Router,
+  private deudasService: DeudasService,
+  private alertController: AlertController,
+  private exportarService: ExportarService // Agregar
+) {
+  addIcons({
+    calendar, cart, cash, checkmarkCircle,
+    documentText, person, walletOutline, shareSocial // Agregar shareSocial
+  });
+}
+
+// Agregar método
+async compartirWhatsApp() {
+  if (this.deuda) {
+    await this.exportarService.compartirDeudaWhatsApp(this.deudaId);
   }
+}
 
   async ngOnInit() {
     this.deudaId = this.route.snapshot.paramMap.get('id') || '';

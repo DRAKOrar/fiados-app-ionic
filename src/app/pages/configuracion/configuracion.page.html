@@ -1,0 +1,130 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-icon name="settings-outline"></ion-icon>
+      Configuración
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+
+    <!-- Información de la app -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Información de Datos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="info-row">
+          <span>Clientes registrados:</span>
+          <strong>{{ estadisticas.totalClientes }}</strong>
+        </div>
+        <div class="info-row">
+          <span>Deudas totales:</span>
+          <strong>{{ estadisticas.totalDeudas }}</strong>
+        </div>
+        <ion-note>
+          Todos los datos se guardan localmente en tu dispositivo
+        </ion-note>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Respaldo y Restauración -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          Respaldo de Datos
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item button (click)="exportarRespaldo()" detail="false">
+            <ion-icon name="download-outline" slot="start" color="primary"></ion-icon>
+            <ion-label>
+              <h2>Exportar Respaldo</h2>
+              <p>Descarga tus datos en formato JSON</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item button (click)="importarRespaldo()" detail="false">
+            <ion-icon name="cloud-upload-outline" slot="start" color="success"></ion-icon>
+            <ion-label>
+              <h2>Importar Respaldo</h2>
+              <p>Restaurar datos desde un archivo</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-note class="warning-note">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          Te recomendamos hacer respaldos regularmente
+        </ion-note>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Ayuda y Soporte -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="information-circle-outline"></ion-icon>
+          Ayuda y Soporte
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item button (click)="mostrarAyuda()" detail="false">
+            <ion-icon name="document-text-outline" slot="start" color="tertiary"></ion-icon>
+            <ion-label>
+              <h2>¿Cómo usar la app?</h2>
+              <p>Guía rápida de uso</p>
+            </ion-label>
+          </ion-item>
+
+          <ion-item button (click)="mostrarAcercaDe()" detail="false">
+            <ion-icon name="information-circle-outline" slot="start" color="medium"></ion-icon>
+            <ion-label>
+              <h2>Acerca de</h2>
+              <p>Versión e información de la app</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Zona de Peligro -->
+    <ion-card class="danger-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="trash-outline"></ion-icon>
+          Zona de Peligro
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-button
+          expand="block"
+          color="danger"
+          fill="outline"
+          (click)="limpiarTodosDatos()">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Eliminar Todos los Datos
+        </ion-button>
+        <ion-note class="danger-note">
+          <ion-icon name="warning"></ion-icon>
+          Esta acción es permanente y no se puede deshacer
+        </ion-note>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Footer info -->
+    <div class="footer-info">
+      <p>Fiados App v1.0.0</p>
+      <p>© 2025 - Todos los derechos reservados</p>
+    </div>
+
+  </div>
+</ion-content>

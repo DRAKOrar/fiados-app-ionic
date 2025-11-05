@@ -31,6 +31,36 @@ export class ExportarService {
     return JSON.stringify(backup, null, 2);
   }
 
+  // Importar desde JSON
+  async importarDesdeJSON(jsonString: string): Promise<{ exito: boolean; mensaje: string }> {
+    try {
+      const backup = JSON.parse(jsonString);
+
+      // Validar estructura
+      if (!backup.datos || !backup.datos.clientes || !backup.datos.deudas || !backup.datos.abonos) {
+        return {
+          exito: false,
+          mensaje: 'Archivo JSON inválido. Formato incorrecto.'
+        };
+      }
+
+      // Restaurar datos
+      await this.storageService.setClientes(backup.datos.clientes);
+      await this.storageService.setDeudas(backup.datos.deudas);
+      await this.storageService.setAbonos(backup.datos.abonos);
+
+      return {
+        exito: true,
+        mensaje: `Datos restaurados correctamente:\n${backup.datos.clientes.length} clientes\n${backup.datos.deudas.length} deudas\n${backup.datos.abonos.length} abonos`
+      };
+    } catch (error) {
+      return {
+        exito: false,
+        mensaje: 'Error al leer el archivo. Asegúrate de que sea un respaldo válido.'
+      };
+    }
+  }
+
   // Descargar JSON
   async descargarJSON() {
     const json = await this.exportarTodoJSON();
